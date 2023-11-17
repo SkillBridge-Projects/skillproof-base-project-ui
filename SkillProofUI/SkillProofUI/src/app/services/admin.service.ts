@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../model/user';
 import { Observable } from 'rxjs';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AdminService {
 
   getUsers(): Observable<User[]> {
 
-    return this.http.get<User[]>('https://localhost:8443/admin/users');
+    return this.http.get<User[]>(`${environment.appUrl}admin/users`);
   }
 
 }

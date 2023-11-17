@@ -5,6 +5,7 @@ import { Post } from '../model/post';
 import { Comment } from '../model/comment';
 import { Notification } from '../model/notification';
 import { InterestReaction } from '../model/interestReaction';
+import { environment } from 'src/environments/environment';
 
 
 const httpOptions = {
@@ -19,11 +20,11 @@ export class NotificationsService {
   constructor(private http: HttpClient) {}
 
   acceptConnection(userId: number,connId: number): Observable<string>{
-    return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/notifications/' + connId.toString() + '/accept-connection', {observe : 'response'});
+    return this.http.put<string>(`${environment.appUrl}in/` + userId.toString() + '/notifications/' + connId.toString() + '/accept-connection', {observe : 'response'});
   }
 
   getNotifications(userId: number): Observable<Notification[]> {
-    return this.http.get<Notification[]>('https://localhost:8443/in/' + userId.toString() + '/notifications');
+    return this.http.get<Notification[]>(`${environment.appUrl}in/` + userId.toString() + '/notifications');
   }
 
 

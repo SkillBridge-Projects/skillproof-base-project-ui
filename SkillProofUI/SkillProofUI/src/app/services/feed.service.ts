@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import { Post } from '../model/post';
 import { Comment } from '../model/comment';
 import { InterestReaction } from '../model/interestReaction';
+import { environment } from 'src/environments/environment';
 
 
 const httpOptions = {
@@ -19,26 +20,26 @@ export class FeedService {
   constructor(private http: HttpClient) {}
 
   addPost(formWrapper: FormData,userId: number): Observable<HttpResponse<string>>{
-    return this.http.post<string>('https://localhost:8443/in/' + userId.toString() + '/feed/new-post', formWrapper, {observe : 'response'});
+    return this.http.post<string>(`${environment.appUrl}in/` + userId.toString() + '/feed/new-post', formWrapper, {observe : 'response'});
   }
 
   getFeedPosts(userId: number): Observable<Post[]>{
-    return this.http.get<Post[]>('https://localhost:8443/in/' + userId.toString() + '/feed-posts');
+    return this.http.get<Post[]>(`${environment.appUrl}in/` + userId.toString() + '/feed-posts');
   }
 
   getRecommendedPosts(userId: number): Observable <Post[]>{
-    return this.http.get<Post[]>('https://localhost:8443/in/' + userId.toString() + '/recommended-posts');
+    return this.http.get<Post[]>(`${environment.appUrl}in/` + userId.toString() + '/recommended-posts');
   }
 
   addPostReaction(postId: number,userId: number): Observable<HttpResponse<any>>{
-    return this.http.put<any>('https://localhost:8443/in/' + userId.toString() + '/feed/post-interested/'+ postId.toString(), {observe : 'response'});
+    return this.http.put<any>(`${environment.appUrl}in/` + userId.toString() + '/feed/post-interested/'+ postId.toString(), {observe : 'response'});
   }
 
   addNewComment(userId: number,postId: number, comment: Comment): Observable<HttpResponse<any>>{
-    return this.http.put<any>('https://localhost:8443/in/' + userId.toString() + '/feed/new-comment/'+ postId.toString(), comment, {observe : 'response'});
+    return this.http.put<any>(`${environment.appUrl}in/` + userId.toString() + '/feed/new-comment/'+ postId.toString(), comment, {observe : 'response'});
   }
 
   userIsInterested(userId: number,postId: number): Observable<HttpResponse<InterestReaction>> {
-    return this.http.get<InterestReaction>('https://localhost:8443/in/' + userId.toString() + '/feed/is-interested/'+ postId.toString(), {observe : 'response'});
+    return this.http.get<InterestReaction>(`${environment.appUrl}in/` + userId.toString() + '/feed/is-interested/'+ postId.toString(), {observe : 'response'});
   }
 }

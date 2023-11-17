@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {User} from './model/user';
 import {Role} from './model/role';
 import {UserDetails} from './model/user-details';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,11 +22,11 @@ export class AuthenticationService{
 
   login(username: string, password: string): Observable<HttpResponse<User>> {
         const ln: Login = { username, password };
-        return this.http.post<User>('https://localhost:8443/login', ln, { observe: 'response'});
+        return this.http.post<User>(`${environment.appUrl}login`, ln, { observe: 'response'});
     }
 
   signup(formWrapper: FormData): Observable<HttpResponse<User>> {
-    return this.http.post<User>('https://localhost:8443/signup', formWrapper, { observe: 'response'});
+    return this.http.post<User>(`${environment.appUrl}signup`, formWrapper, { observe: 'response'});
   }
 
   logout() {
